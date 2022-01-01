@@ -2,6 +2,7 @@ import os
 import sqlite3
 
 import pytest
+
 from hw8.hw2 import TableData
 
 path = os.path.join(os.getcwd(), 'example.sqlite')
