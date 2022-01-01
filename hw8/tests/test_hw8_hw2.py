@@ -1,11 +1,11 @@
-import os
 import sqlite3
+from pathlib import Path
 
 import pytest
 
 from hw8.hw2 import TableData
 
-path = os.path.join(os.getcwd(), 'example.sqlite')
+path = Path(__file__).parent.joinpath('example.sqlite')
 
 
 @pytest.mark.parametrize('table_name, result', [
