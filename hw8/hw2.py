@@ -10,16 +10,14 @@ class TableData:
         self._cursor = self._conn.cursor()
 
         # get table column names to use them as dict keys
-        self._cursor.execute("SELECT name FROM sqlite_schema WHERE type = 'table' AND name NOT LIKE 'sqlite_%';")
-        table_names = self._cursor.fetchall()
-        if table_names is not None:
+        try:
             self._cursor.execute(f"SELECT name FROM PRAGMA_TABLE_INFO('{self.table_name}')")
             columns = []
             for column in self._cursor.fetchall():
                 columns.append(column[0])
             self.columns = columns
-        else:
-            raise sqlite3.OperationalError(f'No such table: {self.table_name}')
+        except sqlite3.OperationalError as err:
+            raise err
 
     def __enter__(self):
         return self
@@ -84,4 +82,3 @@ if __name__ == '__main__':
     # print('1984' in example)
 
     print(example['Farenheit 451'])
-

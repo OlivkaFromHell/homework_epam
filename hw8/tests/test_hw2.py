@@ -68,5 +68,5 @@ def test_check_injection_avoidance():
 
 def test_check_valid_table_name():
     with pytest.raises(sqlite3.OperationalError):
-        with TableData(path, 'countries') as table:
+        with TableData(path, 'non_existing_table') as table:
             assert table['Farenheit 451'] == {'name': 'Farenheit 451', 'author': 'Bradbury'}
