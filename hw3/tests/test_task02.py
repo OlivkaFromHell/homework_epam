@@ -1,4 +1,5 @@
 import pytest
+
 from hw3.task02 import calculate_0_500
 
 

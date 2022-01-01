@@ -1,4 +1,5 @@
 import pytest
+
 from hw3.task04 import is_armstrong
 
 

@@ -1,6 +1,7 @@
 from unittest import mock
 
 import pytest
+
 from hw4.task_2_mock_input import count_dots_on_i
 
 text_positive_case_1 = '<!DOCTYPE html>\n' \

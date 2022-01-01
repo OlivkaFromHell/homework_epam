@@ -1,4 +1,5 @@
 import pytest
+
 from hw7.hw2 import backspace_compare
 
 

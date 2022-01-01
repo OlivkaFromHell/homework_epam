@@ -1,4 +1,5 @@
 import pytest
+
 from hw4.task_1_read_file import MagicNumberError, read_magic_number
 
 

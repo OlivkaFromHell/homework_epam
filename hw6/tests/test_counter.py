@@ -1,4 +1,5 @@
 import pytest
+
 from hw6.counter import instances_counter
 
 

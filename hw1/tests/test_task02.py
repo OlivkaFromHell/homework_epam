@@ -1,4 +1,5 @@
 import pytest
+
 from hw1.task02 import check_fibonacci
 
 data_positive = [

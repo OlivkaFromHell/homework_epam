@@ -1,4 +1,5 @@
 import pytest
+
 from hw7.hw1 import find_occurrences
 
 example_tree_1 = {

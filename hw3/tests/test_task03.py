@@ -1,4 +1,5 @@
 import pytest
+
 from hw3.task03 import make_filter
 
 sample_data = [
