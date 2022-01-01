@@ -1,4 +1,5 @@
 import pytest
+
 from hw7.hw3 import tic_tac_toe_checker
 
 boards_x_win = [[['x', 'x', 'x'],

@@ -1,4 +1,5 @@
 import pytest
+
 from hw4.task_3_get_print_output import my_precious_logger
 
 

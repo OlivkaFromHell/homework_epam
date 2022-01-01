@@ -2,6 +2,7 @@ import datetime
 from unittest.mock import MagicMock
 
 import pytest
+
 from hw6.oop_2 import DeadlineError, Homework, HomeworkResult, Student, Teacher
 
 # ---------------------------------

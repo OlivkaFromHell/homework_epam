@@ -1,6 +1,7 @@
 import os
 
 import pytest
+
 from hw1.task03 import find_maximum_and_minimum
 
 cwd = os.path.dirname(os.path.realpath(__file__)) + '/'

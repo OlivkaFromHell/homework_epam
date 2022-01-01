@@ -1,6 +1,7 @@
 import os
 
 import pytest
+
 from hw2.hw1 import (count_non_ascii_chars, count_punctuation_chars,
                      get_longest_diverse_words, get_most_common_non_ascii_char,
                      get_rarest_char)
