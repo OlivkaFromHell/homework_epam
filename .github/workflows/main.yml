@@ -15,8 +15,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Run script
         run: |
-          pip install isort flake8 pytest
+          pip install isort flake8 pytest requests
           ls -la
           isort . --check
           flake8 . --max-line-length=120
-          py.test */tests
+          python3 -m pytest */tests
