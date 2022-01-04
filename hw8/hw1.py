@@ -13,9 +13,9 @@ class KeyValueStorage(dict):
                 if value.isdigit():
                     value = int(value)
 
-                # name of attribute can't start with digit
-                if key.isidentifier():
-                    super().__setitem__(key, value)
-                    setattr(self, key, value)
-                else:
+                # name of attribute should be indentifier
+                if not key.isidentifier():
                     raise ValueError("Key values should be string type")
+
+                super().__setitem__(key, value)
+                setattr(self, key, value)

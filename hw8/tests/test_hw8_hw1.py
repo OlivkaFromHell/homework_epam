@@ -76,5 +76,4 @@ def test_key_is_digit(opened_file):
 ], indirect=True)
 def test_custom_case(opened_file):
     storage = KeyValueStorage(opened_file)
-    print(storage.__getattr__('keys'))
-    assert storage.__getattr__('keys') != 54
+    assert getattr(storage, 'keys') != 54
