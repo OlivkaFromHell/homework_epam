@@ -41,7 +41,7 @@ def test_accessible_as_collection(opened_file, key, value):
 ])
 def test_accessible_as_attribute(opened_file, key, value):
     storage = KeyValueStorage(opened_file)
-    assert storage.__getattr__(key) == value
+    assert getattr(storage, key) == value
 
 
 @pytest.mark.parametrize("opened_file", [
@@ -56,7 +56,7 @@ def test_accessible_as_attribute(opened_file, key, value):
 ])
 def test_attribute_is_built_in(opened_file, key, value):
     storage = KeyValueStorage(opened_file)
-    assert storage.__getattr__(key) != value
+    assert getattr(storage, key) != value
 
 
 @pytest.mark.parametrize("opened_file", [

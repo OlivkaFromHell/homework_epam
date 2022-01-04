@@ -25,7 +25,7 @@ def test_len_attr(table_name, result):
 ])
 def test_access_as_collection(table_name, name, result):
     with TableData(path, table_name) as table:
-        assert table.__getitem__(name) == result
+        assert table[name] == result
 
 
 @pytest.mark.parametrize('table_name, column, result', [
@@ -38,7 +38,7 @@ def test_iter_method(table_name, column, result):
     with TableData(path, table_name) as table:
         list_of_names = []
         for row in table:
-            list_of_names.append(row.__getitem__(column))
+            list_of_names.append(row[column])
         assert list_of_names == result
 
 
