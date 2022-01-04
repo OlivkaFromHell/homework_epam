@@ -33,9 +33,7 @@ def data_generator(list_of_numbers: list) -> Iterator:
 
 def merge_sorted_files(file_list: List[Union[Path, str]]) -> Iterator:
     file_contest = [
-        list(map(
-            int, Path(__file__).parent.joinpath(path)
-            .read_text().split('\n')))
+        Path(__file__).parent.joinpath(path)
         for path in file_list
     ]
 
