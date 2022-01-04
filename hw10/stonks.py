@@ -1,10 +1,10 @@
+import concurrent.futures
 import json
-import multiprocessing
 import random
 import re
 import time
 import xml.etree.ElementTree as ElementTree
-from typing import Dict, List, NoReturn, Tuple, Union
+from typing import Dict, List, Tuple, Union
 
 import requests
 from bs4 import BeautifulSoup, element
@@ -140,8 +140,8 @@ def get_list_of_pages_with_link_and_growth() -> Dict[int, List[Tuple[str, float]
     amount_of_pages = get_amount_of_pages()
 
     company_names = {}
-    with multiprocessing.Pool(amount_of_pages) as p:
-        page_link_and_growth = p.map(get_links_and_growths_from_page, range(1, amount_of_pages + 1))
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        page_link_and_growth = executor.map(get_links_and_growths_from_page, range(1, amount_of_pages + 1))
 
     for page_number, list_with_link_and_growth in enumerate(page_link_and_growth):
         company_names[page_number + 1] = list_with_link_and_growth
@@ -153,8 +153,8 @@ def parse_pages() -> Dict[str, Dict[str, Union[str, float]]]:
 
     companies = {}
     for page in company_links:
-        with multiprocessing.Pool(50) as p:
-            list_with_data = p.map(get_company_info, [(link, growth) for link, growth in company_links[page]])
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            list_with_data = executor.map(get_company_info, [(link, growth) for link, growth in company_links[page]])
         for info in list_with_data:
             name, price, code, p_e, annual_growth, potential_profit = info
             companies[name] = {'price': price, 'code': code,
@@ -164,17 +164,43 @@ def parse_pages() -> Dict[str, Dict[str, Union[str, float]]]:
     return companies
 
 
-def get_sorted_dict(companies_info: dict, key: str) -> dict:
-    return dict(sorted(companies_info.items(), key=lambda item: item[1][key], reverse=True)[:10])
+class Companies:
+    def __init__(self, companies_info):
+        self.companies_info = companies_info
+
+    def get_sorted_dict(self, key: str, reverse: bool) -> dict:
+        return dict(sorted(self.companies_info.items(), key=lambda item: item[1][key], reverse=reverse)[:10])
 
 
-def create_json_data(companies_info) -> NoReturn:
-    topics = [('10_most_expensive_companies', 'price'), ('10_lowest_p_e', 'P/E'),
-              ('10_highest_growth_rate', 'annual growth'), ('10_most_rentable', 'potential profit')]
+class MostExpensiveCompanies(Companies):
+    def __init__(self, companies_info):
+        super().__init__(companies_info)
+        with open('10_most_expensive_companies.json', 'w') as f:
+            sorted_companies = self.get_sorted_dict('price', True)
+            json.dump(sorted_companies, f)
 
-    for topic, key in topics:
-        sorted_companies = get_sorted_dict(companies_info, key)
-        with open(f'{topic}.json', 'w') as f:
+
+class LessPEvalueCompanies(Companies):
+    def __init__(self, companies_info):
+        super().__init__(companies_info)
+        with open('10_lowest_p_e.json', 'w') as f:
+            sorted_companies = self.get_sorted_dict('P/E', False)
+            json.dump(sorted_companies, f)
+
+
+class HighestGrowthCompanies(Companies):
+    def __init__(self, companies_info):
+        super().__init__(companies_info)
+        with open('10_highest_growth_rate.json', 'w') as f:
+            sorted_companies = self.get_sorted_dict('annual growth', True)
+            json.dump(sorted_companies, f)
+
+
+class MostRentableCompanies(Companies):
+    def __init__(self, companies_info):
+        super().__init__(companies_info)
+        with open('10_most_rentable.json', 'w') as f:
+            sorted_companies = self.get_sorted_dict('potential profit', True)
             json.dump(sorted_companies, f)
 
 
@@ -182,7 +208,10 @@ if __name__ == '__main__':
     start = time.time()
 
     companies_data = parse_pages()
-    create_json_data(companies_data)
+    MostExpensiveCompanies(companies_data)
+    LessPEvalueCompanies(companies_data)
+    HighestGrowthCompanies(companies_data)
+    MostRentableCompanies(companies_data)
 
     finish = time.time()
 

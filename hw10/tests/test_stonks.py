@@ -51,7 +51,8 @@ def test_get_company_cost(monkeypatch):
 def test_get_sorted_dict():
     info = {'Google': {'cost': 500, 'age': 20}, 'Apple': {'cost': 1000, 'age': 30}}
     sorted_info = {'Apple': {'cost': 1000, 'age': 30}, 'Google': {'cost': 500, 'age': 20}}
-    assert hw10.stonks.get_sorted_dict(info, 'cost') == sorted_info
+
+    assert hw10.stonks.Companies(info).get_sorted_dict('cost', reverse=True) == sorted_info
 
 
 def test_get_amount_of_pages(monkeypatch):
