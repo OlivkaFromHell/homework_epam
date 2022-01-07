@@ -41,18 +41,14 @@ def test_wrapper_retry(monkeypatch):
 
 
 def test_get_company_cost(monkeypatch):
-    def fake_get_usd_value():
-        return 1
-
-    monkeypatch.setattr(hw10.stonks, 'get_usd_value', fake_get_usd_value)
-    assert hw10.stonks.get_company_cost('50') == 50.0
+    assert hw10.stonks.get_company_cost('50', usd_value=1) == 50.0
 
 
 def test_get_sorted_dict():
     info = {'Google': {'cost': 500, 'age': 20}, 'Apple': {'cost': 1000, 'age': 30}}
     sorted_info = {'Apple': {'cost': 1000, 'age': 30}, 'Google': {'cost': 500, 'age': 20}}
 
-    assert hw10.stonks.Companies(info).get_sorted_dict('cost', reverse=True) == sorted_info
+    assert hw10.stonks.Data(info).get_sorted_dict('cost', reverse=True) == sorted_info
 
 
 def test_get_amount_of_pages(monkeypatch):

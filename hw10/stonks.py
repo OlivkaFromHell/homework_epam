@@ -4,7 +4,8 @@ import random
 import re
 import time
 import xml.etree.ElementTree as ElementTree
-from typing import Dict, List, Tuple, Union
+from itertools import chain
+from typing import Dict, List, Tuple
 
 import requests
 from bs4 import BeautifulSoup, element
@@ -82,10 +83,13 @@ def get_links_and_growths_from_page(page_number: int) -> List[Tuple[str, float]]
     return company_link_growth
 
 
-def get_company_cost(cost: str) -> float:
+USD_VALUE = get_usd_value()
+
+
+def get_company_cost(cost: str, usd_value=USD_VALUE) -> float:
     """calculate cost of company from usd to rubbles"""
     cost = float(cost.replace(',', ''))
-    return round(get_usd_value() * cost, 2)
+    return round(usd_value * cost, 2)
 
 
 def get_p_e(table: element.ResultSet) -> float:
@@ -132,86 +136,95 @@ def get_company_info(link_growth: Tuple[str, float]) -> Tuple[str, float, str, f
     return name, price, code, p_e, annual_growth, potential_profit
 
 
-def get_list_of_pages_with_link_and_growth() -> Dict[int, List[Tuple[str, float]]]:
-    """Iterates through all pages and returns dict
-        key: page number
-        value: list of tuple(link to company, annual growth)
+def get_list_of_pages_with_link_and_growth() -> List[Tuple[str, float]]:
+    """
+    Iterates through all pages and returns dict
+    key: page number
+    value: list of tuple(link to company, annual growth)
     """
     amount_of_pages = get_amount_of_pages()
 
-    company_names = {}
     with concurrent.futures.ThreadPoolExecutor() as executor:
         page_link_and_growth = executor.map(get_links_and_growths_from_page, range(1, amount_of_pages + 1))
 
-    for page_number, list_with_link_and_growth in enumerate(page_link_and_growth):
-        company_names[page_number + 1] = list_with_link_and_growth
-    return company_names
+    return list(chain(*page_link_and_growth))
 
 
-def parse_pages() -> Dict[str, Dict[str, Union[str, float]]]:
-    company_links = get_list_of_pages_with_link_and_growth()
+class Company(dict):
+    def __init__(self, price, code, p_e, annual_growth, potential_profit):
+        super().__init__()
+        self.update({'price': price})
+        self.update({'code': code})
+        self.update({'P/E': p_e})
+        self.update({'annual growth': annual_growth})
+        self.update({'potential profit': potential_profit})
 
-    companies = {}
-    for page in company_links:
+
+class Parser:
+    @staticmethod
+    def parse_pages() -> Dict[str, Company]:
+        company_links = get_list_of_pages_with_link_and_growth()
+
+        companies = {}
+
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            list_with_data = executor.map(get_company_info, [(link, growth) for link, growth in company_links[page]])
+            list_with_data = executor.map(get_company_info, [(link, growth) for link, growth in company_links])
+
         for info in list_with_data:
             name, price, code, p_e, annual_growth, potential_profit = info
-            companies[name] = {'price': price, 'code': code,
-                               'P/E': p_e, 'annual growth': annual_growth,
-                               'potential profit': potential_profit}
+            companies[name] = Company(price, code, p_e, annual_growth, potential_profit)
 
-    return companies
+        return companies
+
+    def __init__(self):
+        self.info = self.parse_pages()
 
 
-class Companies:
-    def __init__(self, companies_info):
-        self.companies_info = companies_info
+class Data:
+    def __init__(self, info):
+        self.info = info
 
     def get_sorted_dict(self, key: str, reverse: bool) -> dict:
-        return dict(sorted(self.companies_info.items(), key=lambda item: item[1][key], reverse=reverse)[:10])
+        return dict(sorted(self.info.items(), key=lambda item: item[1][key], reverse=reverse)[:10])
 
-
-class MostExpensiveCompanies(Companies):
-    def __init__(self, companies_info):
-        super().__init__(companies_info)
-        with open('10_most_expensive_companies.json', 'w') as f:
-            sorted_companies = self.get_sorted_dict('price', True)
+    def create_json(self, filename: str, key: str, reverse: bool):
+        with open(filename, 'w') as f:
+            sorted_companies = self.get_sorted_dict(key, reverse)
             json.dump(sorted_companies, f)
 
 
-class LessPEvalueCompanies(Companies):
-    def __init__(self, companies_info):
-        super().__init__(companies_info)
-        with open('10_lowest_p_e.json', 'w') as f:
-            sorted_companies = self.get_sorted_dict('P/E', False)
-            json.dump(sorted_companies, f)
+class MostExpensiveCompanies(Data):
+    def __init__(self, info):
+        super().__init__(info)
+        self.create_json('10_most_expensive_companies.json', 'price', True)
 
 
-class HighestGrowthCompanies(Companies):
-    def __init__(self, companies_info):
-        super().__init__(companies_info)
-        with open('10_highest_growth_rate.json', 'w') as f:
-            sorted_companies = self.get_sorted_dict('annual growth', True)
-            json.dump(sorted_companies, f)
+class LessPEvalueCompanies(Data):
+    def __init__(self, info):
+        super().__init__(info)
+        self.create_json('10_lowest_p_e.json', 'P/E', False)
 
 
-class MostRentableCompanies(Companies):
-    def __init__(self, companies_info):
-        super().__init__(companies_info)
-        with open('10_most_rentable.json', 'w') as f:
-            sorted_companies = self.get_sorted_dict('potential profit', True)
-            json.dump(sorted_companies, f)
+class HighestGrowthCompanies(Data):
+    def __init__(self, info):
+        super().__init__(info)
+        self.create_json('10_highest_growth_rate.json', 'annual growth', True)
+
+
+class MostRentableCompanies(Data):
+    def __init__(self, info):
+        super().__init__(info)
+        self.create_json('10_most_rentable.json', 'potential profit', True)
 
 
 if __name__ == '__main__':
     start = time.time()
 
-    companies_data = parse_pages()
-    MostExpensiveCompanies(companies_data)
-    LessPEvalueCompanies(companies_data)
-    HighestGrowthCompanies(companies_data)
-    MostRentableCompanies(companies_data)
+    data = Parser().info
+    MostExpensiveCompanies(data)
+    LessPEvalueCompanies(data)
+    HighestGrowthCompanies(data)
+    MostRentableCompanies(data)
 
     finish = time.time()
 
