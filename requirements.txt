@@ -2,4 +2,7 @@
 
 jupyter
 rise
-pytest
+pytest~=6.2.5
+requests~=2.26.0
+SQLAlchemy~=1.4.29
+alembic~=1.7.5
