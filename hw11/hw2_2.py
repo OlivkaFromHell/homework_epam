@@ -28,29 +28,39 @@ assert order_1.final_price() == 75
 order_2 = Order(100, elder_discount)
 assert order_2.final_price() == 10
 """
-from typing import Callable, Union
+from abc import ABC, abstractmethod
+from typing import ClassVar, Union
+
+
+class DiscountStrategy(ABC):
+    @abstractmethod
+    def calculate_discount(self, price):
+        pass
+
+
+class MorningDiscount(DiscountStrategy):
+    def calculate_discount(self, price):
+        return price * 0.25
+
+
+class ElderDiscount(DiscountStrategy):
+    def calculate_discount(self, price):
+        return price * 0.9
 
 
 class Order:
-    def __init__(self, price: Union[float, int], discount: Callable):
+    def __init__(self, price: Union[float, int], discount: ClassVar):
         self.price = price
-        if discount() > 1:
-            raise ValueError("discount shouldn't be more than 100%")
         self.__discount = discount
 
     def final_price(self):
-        return self.price - self.price * self.__discount()
+        return self.price - self.__discount.calculate_discount(self, self.price)
 
 
 if __name__ == "__main__":
-    def morning_discount():
-        return 0.25
 
-    def elder_discount():
-        return 0.9
-
-    order_1 = Order(100, morning_discount)
+    order_1 = Order(100, MorningDiscount)
     assert order_1.final_price() == 75
 
-    order_2 = Order(100, elder_discount)
+    order_2 = Order(100, ElderDiscount)
     assert order_2.final_price() == 10

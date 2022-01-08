@@ -39,7 +39,7 @@ class SimplifiedEnum(type):
     def __new__(mcs, name, bases, dct):
         x = super().__new__(mcs, name, bases, dct)
         for name, value in dct.items():
-            if name.endswith('__keys'):
+            if name == f'_{x.__name__}__keys':
                 for key in value:
                     setattr(x, key, key)
         return x
