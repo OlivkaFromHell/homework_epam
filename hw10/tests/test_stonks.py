@@ -37,7 +37,7 @@ def test_wrapper_retry(monkeypatch):
     monkeypatch.setattr(requests.Session, "get", mock_get_page)
 
     with pytest.raises(requests.ConnectionError):
-        hw10.stonks.get_page('unvalid_link.com')
+        hw10.stonks.Parser().get_page('unvalid_link.com')
 
 
 def test_get_company_cost(monkeypatch):
