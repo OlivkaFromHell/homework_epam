@@ -1,1 +1,52 @@
-{"NVR Inc.": {"price": 407774.25, "code": "NVR", "P/E": 17.87, "annual growth": 45.2, "potential profit": 53.88}, "Amazon": {"price": 241563.87, "code": "AMZN", "P/E": 79.54, "annual growth": 4.1, "potential profit": 30.96}, "Alphabet C (ex Google)": {"price": 203442.11, "code": "GOOG", "P/E": 30.01, "annual growth": 65.91, "potential profit": 76.37}, "Alphabet A (ex Google)": {"price": 203355.93, "code": "GOOGL", "P/E": 30.0, "annual growth": 65.97, "potential profit": 76.39}, "Booking Holdings Inc Registered Shs": {"price": 181927.72, "code": "BKNG", "P/E": 460.92, "annual growth": 12.65, "potential profit": 44.42}, "AutoZone Inc.": {"price": 150124.54, "code": "AZO", "P/E": 16.27, "annual growth": 76.12, "potential profit": 90.16}, "Chipotle Mexican Grill Inc.": {"price": 119283.46, "code": "CMG", "P/E": 129.05, "annual growth": 21.63, "potential profit": 55.9}, "Mettler-Toledo International Inc.": {"price": 115770.9, "code": "MTD", "P/E": 43.78, "annual growth": 39.34, "potential profit": 65.93}, "Tesla": {"price": 76729.4, "code": "TSLA", "P/E": 299.31, "annual growth": 56.38, "potential profit": 130.49}, "BlackRock Inc.": {"price": 66312.83, "code": "BLK", "P/E": 20.99, "annual growth": 28.36, "potential profit": 45.16}}
+[
+  {
+    "name": "NVR Inc.",
+    "price": 406536.55,
+    "code": "NVR"
+  },
+  {
+    "name": "Amazon",
+    "price": 235157.09,
+    "code": "AMZN"
+  },
+  {
+    "name": "Alphabet A (ex Google)",
+    "price": 200767.15,
+    "code": "GOOGL"
+  },
+  {
+    "name": "Alphabet C (ex Google)",
+    "price": 200601.86,
+    "code": "GOOG"
+  },
+  {
+    "name": "Booking Holdings Inc Registered Shs",
+    "price": 177797.94,
+    "code": "BKNG"
+  },
+  {
+    "name": "AutoZone Inc.",
+    "price": 147877.57,
+    "code": "AZO"
+  },
+  {
+    "name": "Mettler-Toledo International Inc.",
+    "price": 114093.19,
+    "code": "MTD"
+  },
+  {
+    "name": "Chipotle Mexican Grill Inc.",
+    "price": 113453.07,
+    "code": "CMG"
+  },
+  {
+    "name": "Tesla",
+    "price": 75201.37,
+    "code": "TSLA"
+  },
+  {
+    "name": "BlackRock Inc.",
+    "price": 65126.24,
+    "code": "BLK"
+  }
+]

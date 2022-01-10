@@ -1,72 +1,52 @@
-{
-  "Vornado Realty Trust": {
-    "price": 3410.03,
+[
+  {
+    "name": "Vornado Realty Trust",
     "code": "VNO",
-    "P/E": -893.45,
-    "annual growth": 27.14,
-    "potential profit": 45.3
+    "p_e": -893.45
   },
-  "Chevron Corp.": {
-    "price": 9297.72,
+  {
+    "name": "Chevron Corp.",
     "code": "CVX",
-    "P/E": -427.45,
-    "annual growth": 39.53,
-    "potential profit": 48.45
+    "p_e": -427.45
   },
-  "Devon Energy Corp.": {
-    "price": 3642.57,
+  {
+    "name": "Devon Energy Corp.",
     "code": "DVN",
-    "P/E": -167.13,
-    "annual growth": 174.32,
-    "potential profit": 208.81
+    "p_e": -167.13
   },
-  "ExxonMobil Corp. (Exxon Mobil)": {
-    "price": 5118.02,
+  {
+    "name": "ExxonMobil Corp. (Exxon Mobil)",
     "code": "XOM",
-    "P/E": -125.36,
-    "annual growth": 53.07,
-    "potential profit": 56.18
+    "p_e": -125.36
   },
-  "Phillips 66": {
-    "price": 6053.36,
+  {
+    "name": "Phillips 66",
     "code": "PSX",
-    "P/E": -76.53,
-    "annual growth": 9.58,
-    "potential profit": 49.27
+    "p_e": -76.53
   },
-  "Under Armour Inc.": {
-    "price": 1485.11,
+  {
+    "name": "Under Armour Inc.",
     "code": "UAA",
-    "P/E": -64.5,
-    "annual growth": 20.32,
-    "potential profit": 58.97
+    "p_e": -64.5
   },
-  "Incyte Corp.": {
-    "price": 5444.16,
+  {
+    "name": "Incyte Corp.",
     "code": "INCY",
-    "P/E": -63.09,
-    "annual growth": -16.37,
-    "potential profit": 63.9
+    "p_e": -63.09
   },
-  "Twitter": {
-    "price": 2965.76,
+  {
+    "name": "Twitter",
     "code": "TWTR",
-    "P/E": -62.1,
-    "annual growth": -24.18,
-    "potential profit": 108.68
+    "p_e": -62.1
   },
-  "Moderna Inc": {
-    "price": 15943.93,
+  {
+    "name": "Moderna Inc",
     "code": "MRNA",
-    "P/E": -59.95,
-    "annual growth": 113.46,
-    "potential profit": 345.93
+    "p_e": -59.95
   },
-  "Under Armour Inc When Issued": {
-    "price": 1269.66,
+  {
+    "name": "Under Armour Inc When Issued",
     "code": "UA",
-    "P/E": -55.67,
-    "annual growth": 17.85,
-    "potential profit": 57.14
+    "p_e": -55.67
   }
-}
+]

@@ -1,1 +1,52 @@
-{"Ford Motor Co.": {"price": 1818.68, "code": "F", "P/E": 21.51, "annual growth": 181.16, "potential profit": 182.88}, "Devon Energy Corp.": {"price": 3642.57, "code": "DVN", "P/E": -167.13, "annual growth": 174.32, "potential profit": 208.81}, "Bath & Body Works": {"price": 4440.47, "code": "BBWI", "P/E": 14.17, "annual growth": 144.13, "potential profit": 0}, "Marathon Oil Corp.": {"price": 1353.61, "code": "MRO", "P/E": Infinity, "annual growth": 136.67, "potential profit": 155.65}, "Fortinet Inc": {"price": 23483.89, "code": "FTNT", "P/E": 43.03, "annual growth": 127.28, "potential profit": 167.25}, "Diamondback Energy Inc": {"price": 9011.69, "code": "FANG", "P/E": 15.58, "annual growth": 122.1, "potential profit": 130.33}, "NVIDIA Corp.": {"price": 20349.49, "code": "NVDA", "P/E": 51.8, "annual growth": 118.5, "potential profit": 199.44}, "Nucor Corp.": {"price": 8491.64, "code": "NUE", "P/E": 15.99, "annual growth": 116.49, "potential profit": 168.69}, "Moderna Inc": {"price": 15943.93, "code": "MRNA", "P/E": -59.95, "annual growth": 113.46, "potential profit": 345.93}, "Gartner Inc.": {"price": 22324.93, "code": "IT", "P/E": 32.29, "annual growth": 102.46, "potential profit": 146.43}}
+[
+  {
+    "name": "Ford Motor Co.",
+    "code": "F",
+    "annual_growth": 167.5
+  },
+  {
+    "name": "Devon Energy Corp.",
+    "code": "DVN",
+    "annual_growth": 154.34
+  },
+  {
+    "name": "Bath & Body Works",
+    "code": "BBWI",
+    "annual_growth": 144.13
+  },
+  {
+    "name": "Marathon Oil Corp.",
+    "code": "MRO",
+    "annual_growth": 129.75
+  },
+  {
+    "name": "Fortinet Inc",
+    "code": "FTNT",
+    "annual_growth": 119.75
+  },
+  {
+    "name": "NVIDIA Corp.",
+    "code": "NVDA",
+    "annual_growth": 118.83
+  },
+  {
+    "name": "Nucor Corp.",
+    "code": "NUE",
+    "annual_growth": 115.2
+  },
+  {
+    "name": "Diamondback Energy Inc",
+    "code": "FANG",
+    "annual_growth": 109.71
+  },
+  {
+    "name": "Extra Space Storage Inc.",
+    "code": "EXR",
+    "annual_growth": 100.26
+  },
+  {
+    "name": "Simon Property Group Inc.",
+    "code": "SPG",
+    "annual_growth": 96.04
+  }
+]

@@ -27,7 +27,7 @@ def test_get_usd_value(monkeypatch):
 
     monkeypatch.setattr(requests.Session, "get", mock_get_page)
 
-    assert hw10.stonks.get_usd_value() == 53.9141
+    assert hw10.stonks.Parser().get_usd_value() == 53.9141
 
 
 def test_wrapper_retry(monkeypatch):
@@ -41,17 +41,40 @@ def test_wrapper_retry(monkeypatch):
 
 
 def test_get_company_cost(monkeypatch):
-    assert hw10.stonks.get_company_cost('50', usd_value=1) == 50.0
+    xml = '<ValCurs Date="31.12.2021" name="Foreign Currency Market">' \
+          '<Valute ID="R01235">' \
+          '<NumCode>036</NumCode>' \
+          '<CharCode>AUD</CharCode>' \
+          '<Nominal>1</Nominal>' \
+          '<Name>Австралийский доллар</Name>' \
+          '<Value>1,0</Value>' \
+          '</Valute></ValCurs>'
+
+    def mock_get_page(*args, **kwargs):
+        return FakeResponse(200, xml)
+
+    monkeypatch.setattr(requests.Session, "get", mock_get_page)
+
+    assert hw10.stonks.Parser().get_company_cost('50') == 50.0
 
 
 def test_get_sorted_dict():
-    info = {'Google': {'cost': 500, 'age': 20}, 'Apple': {'cost': 1000, 'age': 30}}
-    sorted_info = {'Apple': {'cost': 1000, 'age': 30}, 'Google': {'cost': 500, 'age': 20}}
+    info = [hw10.stonks.Company(name='3M Co.', price=13411.72, code='MMM', p_e=19.91,
+                                annual_growth=3.06, potential_profit=27.85),
+            hw10.stonks.Company(name='A.O. Smith Corp.', price=6181.07, code='AOS', p_e=25.06,
+                                annual_growth=48.8, potential_profit=66.55)]
+    sorted_info = [hw10.stonks.Company(name='A.O. Smith Corp.', price=6181.07, code='AOS', p_e=25.06,
+                                       annual_growth=48.8, potential_profit=66.55).dict(include={'name', 'code',
+                                                                                                 'potential_profit'}),
+                   hw10.stonks.Company(name='3M Co.', price=13411.72, code='MMM', p_e=19.91,
+                                       annual_growth=3.06, potential_profit=27.85).dict(include={'name', 'code',
+                                                                                                 'potential_profit'})]
 
-    assert hw10.stonks.Data(info).get_sorted_dict('cost', reverse=True) == sorted_info
+    assert hw10.stonks.Data(info, 'a.json', 'potential_profit', True).get_sorted_companies() == sorted_info
 
 
 def test_get_amount_of_pages(monkeypatch):
+    data = hw10.stonks.Parser()
     html = '<html>' \
            '<div class="finando_paging margin-top--small">' \
            '<a href="?p=1">1</a>' \
@@ -66,10 +89,11 @@ def test_get_amount_of_pages(monkeypatch):
 
     monkeypatch.setattr(requests.Session, "get", mock_get_page)
 
-    assert hw10.stonks.get_amount_of_pages() == 3
+    assert data.get_amount_of_pages() == 3
 
 
 def test_get_links_and_growths_from_page(monkeypatch):
+    data = hw10.stonks.Parser()
     with open(Path(__file__).parent.joinpath('home_page.html')) as f:
         html = f.read()
 
@@ -80,10 +104,11 @@ def test_get_links_and_growths_from_page(monkeypatch):
 
     result = [('/stocks/yum-stock', 25.85), ('/stocks/zbra-stock', 54.53),
               ('/stocks/zbh-stock', -14.89)]
-    assert hw10.stonks.get_links_and_growths_from_page(1) == result
+    assert data.get_links_and_growths_from_page(1) == result
 
 
 def test_get_company_info(monkeypatch):
+    data = hw10.stonks.Parser()
     with open(Path(__file__).parent.joinpath('company_page.html')) as f:
         html = f.read()
 
@@ -94,7 +119,8 @@ def test_get_company_info(monkeypatch):
         return 10080.02
 
     monkeypatch.setattr(requests.Session, "get", mock_get_page)
-    monkeypatch.setattr(hw10.stonks, 'get_company_cost', fake_get_company_cost)
+    monkeypatch.setattr(hw10.stonks.Parser, 'get_company_cost', fake_get_company_cost)
 
-    result = 'YUM! Brands Inc.', 10080.02, "YUM", float('inf'), 25.85, 0
-    assert hw10.stonks.get_company_info(('/mmm/stock/', 25.85)) == result
+    result = hw10.stonks.Company(name='YUM! Brands Inc.', price=10080.02, code="YUM", p_e=float('inf'),
+                                 annual_growth=25.85, potential_profit=0)
+    assert data.get_company_info(('/mmm/stock/', 25.85)) == result
