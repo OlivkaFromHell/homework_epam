@@ -5,3 +5,5 @@ bs4~=0.0.1
 beautifulsoup4~=4.10.0
 isort
 flake8~=3.7.9
+SQLAlchemy~=1.4.29
+alembic~=1.7.5
