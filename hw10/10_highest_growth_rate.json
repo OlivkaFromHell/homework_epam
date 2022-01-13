@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Ford Motor Co.",
+    "code": "F",
+    "annual_growth": 167.5
+  },
+  {
+    "name": "Devon Energy Corp.",
+    "code": "DVN",
+    "annual_growth": 154.34
+  },
+  {
+    "name": "Bath & Body Works",
+    "code": "BBWI",
+    "annual_growth": 144.13
+  },
+  {
+    "name": "Marathon Oil Corp.",
+    "code": "MRO",
+    "annual_growth": 129.75
+  },
+  {
+    "name": "Fortinet Inc",
+    "code": "FTNT",
+    "annual_growth": 119.75
+  },
+  {
+    "name": "NVIDIA Corp.",
+    "code": "NVDA",
+    "annual_growth": 118.83
+  },
+  {
+    "name": "Nucor Corp.",
+    "code": "NUE",
+    "annual_growth": 115.2
+  },
+  {
+    "name": "Diamondback Energy Inc",
+    "code": "FANG",
+    "annual_growth": 109.71
+  },
+  {
+    "name": "Extra Space Storage Inc.",
+    "code": "EXR",
+    "annual_growth": 100.26
+  },
+  {
+    "name": "Simon Property Group Inc.",
+    "code": "SPG",
+    "annual_growth": 96.04
+  }
+]
