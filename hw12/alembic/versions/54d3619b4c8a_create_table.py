@@ -1,8 +1,8 @@
-"""init db
+"""create table
 
-Revision ID: 9c35d6f186bb
+Revision ID: 54d3619b4c8a
 Revises:
-Create Date: 2022-01-09 00:51:10.837766
+Create Date: 2022-01-17 22:16:44.964078
 
 """
 import datetime
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = '9c35d6f186bb'
+revision = '54d3619b4c8a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('text', sa.String),
         sa.Column('deadline', sa.Date),
+        sa.Column('teacher_id', sa.Date),
         sa.Column('created', sa.DateTime, default=datetime.datetime.now()),
     )
     op.create_table(

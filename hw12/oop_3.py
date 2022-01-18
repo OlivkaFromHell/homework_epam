@@ -35,7 +35,10 @@ class Homework(Base):
     id = Column(Integer, primary_key=True)
     text = Column(String)
     deadline = Column(Date)
+    teacher_id = Column(Integer, ForeignKey('teacher.id'))
     created = Column(DateTime(timezone=True), server_default=func.now())  # ColumnDefault()
+
+    teacher = relationship('Teacher', back_populates='homework')
     homeworkresult = relationship('HomeworkResult', back_populates='homework')
 
     def __repr__(self):
@@ -59,6 +62,7 @@ class Teacher(User):
     __tablename__ = 'teacher'
 
     id = Column(Integer, primary_key=True)
+    homework = relationship('Homework', back_populates='teacher')
 
 
 class HomeworkResult(Base):
@@ -68,6 +72,7 @@ class HomeworkResult(Base):
     solution = Column(String)
     created = Column(DateTime, ColumnDefault(datetime.datetime.now()))
     homework_id = Column(Integer, ForeignKey('homework.id'))
-    student_id = Column(Integer, ForeignKey('student.id'))
+    author_id = Column(Integer, ForeignKey('student.id'))
+
     homework = relationship('Homework', back_populates='homeworkresult')
     student = relationship('Student', back_populates='homeworkresult')
