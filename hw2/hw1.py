@@ -15,7 +15,6 @@ from typing import List
 def get_longest_diverse_words(file_path: str) -> List[str]:
     """Return list of 10 longest words consisting from largest amount of unique symbols sorted from longest"""
     with open(file_path, encoding="raw_unicode_escape") as f:
-        # TODO: solve issue with 506 line in data.txt
         line_break = False  # if the last line ends with unfinished word: frei-\nlich'
         unfinished_word = ""
         longest_words = {}
